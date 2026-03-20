@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController //? Anotação para indicar que esta classe é um controlador REST
 @RequestMapping //? Anotação para mapear as requisições HTTP para um caminho específico (neste caso, a raiz "/")
-public class Controller {
+public class NinjaController {
 
     //TODO: Criar um metodo GET para retornar uma mensagem de boas-vindas
 
