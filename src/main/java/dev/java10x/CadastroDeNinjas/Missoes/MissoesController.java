@@ -1,10 +1,16 @@
 package dev.java10x.CadastroDeNinjas.Missoes;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("missoes") //? Anotação para mapear as requisições HTTP para um caminho específico (neste caso, "/missoes")
+@RequestMapping("/missao") //? Anotação para mapear as requisições HTTP para um caminho específico (neste caso, "/missoes")
+@RequiredArgsConstructor
 public class MissoesController {
+
+    private final MissoesService missoesService;
 
     // Adicionar missão (CREATE)
     @PostMapping("/criar")
@@ -13,9 +19,9 @@ public class MissoesController {
     }
 
     // Mostrar todas as missoes (READ)
-    @GetMapping("/todos")
-    public String mostrarTodasAsMissoes(){
-        return "Mostrar todas as missões";
+    @GetMapping("/listar")
+    public List<MissoesModel> mostrarTodasAsMissoes(){
+        return missoesService.listarMissoes();
     }
 
     // Mostrar missoes por id (READ)
