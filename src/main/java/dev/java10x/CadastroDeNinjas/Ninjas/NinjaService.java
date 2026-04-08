@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service //? Anotação para indicar que esta classe é um serviço, responsável pela lógica de negócios da aplicação
 @RequiredArgsConstructor
@@ -18,10 +19,9 @@ public class NinjaService {
 
     //Lista ninja por ID
     public NinjaModel listarNinjasPorId(Long id) {
-        var ninja = ninjaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ninja não encontrado com o ID: " + id));;
+         Optional<NinjaModel> ninja = ninjaRepository.findById(id);
 
-        return ninja;
+        return ninja.orElse(null);
     }
 
 }
