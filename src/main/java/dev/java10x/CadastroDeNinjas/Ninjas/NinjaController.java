@@ -1,10 +1,16 @@
 package dev.java10x.CadastroDeNinjas.Ninjas;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController //? Anotação para indicar que esta classe é um controlador REST
 @RequestMapping("/ninja") //? Anotação para mapear as requisições HTTP para um caminho específico (neste caso, a raiz "/")
+@RequiredArgsConstructor
 public class NinjaController {
+
+    private final NinjaService ninjaService;
 
     @GetMapping("/boasvindas") //? Anotação para mapear as requisições GET para o caminho "/boasvindas"
     public String boasVindas() {
@@ -19,14 +25,14 @@ public class NinjaController {
 
     // Mostrar todos os ninjas (READ)
     @GetMapping("/listar")
-    public String mostrarTodosOsNinja() {
-        return "Mostrar ninja";
+    public List<NinjaModel> mostrarTodosOsNinja() {
+        return ninjaService.listarNinjas();
     }
 
     // Mostrar ninjas por id (READ)
-    @GetMapping("/listarID")
-    public String mostrarTodosOsNinjaPorId() {
-        return "Mostrar ninja por ID";
+    @GetMapping("/listar/{id}")
+    public NinjaModel mostrarTodosOsNinjaPorId(@PathVariable long id) {
+        return ninjaService.listarNinjasPorId(id);
     }
 
     // Alterar dados dos ninjas (UPDATE)
