@@ -23,4 +23,9 @@ public class MissoesService {
 
         return missoesModel.orElse(null);
     }
+
+    // Cria uma nova missao
+    public MissoesModel criarMissao(MissoesModel missao){
+        return missoesRepository.save(missao);
+    }
 }
