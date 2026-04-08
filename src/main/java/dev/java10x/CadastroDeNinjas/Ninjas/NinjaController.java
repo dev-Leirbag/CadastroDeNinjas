@@ -19,8 +19,8 @@ public class NinjaController {
 
     // Adicionar ninja (CREATE)
     @PostMapping("/criar") //? Anotação para mapear as requisições POST para o caminho "/criar")
-    public String criarNinja() {
-        return "Ninja Criado";
+    public NinjaModel criarNinja(@RequestBody NinjaModel ninja) {
+        return ninjaService.criarNinja(ninja);
     }
 
     // Mostrar todos os ninjas (READ)
