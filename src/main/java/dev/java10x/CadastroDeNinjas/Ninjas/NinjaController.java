@@ -3,7 +3,7 @@ package dev.java10x.CadastroDeNinjas.Ninjas;
 import org.springframework.web.bind.annotation.*;
 
 @RestController //? Anotação para indicar que esta classe é um controlador REST
-@RequestMapping //? Anotação para mapear as requisições HTTP para um caminho específico (neste caso, a raiz "/")
+@RequestMapping("/ninja") //? Anotação para mapear as requisições HTTP para um caminho específico (neste caso, a raiz "/")
 public class NinjaController {
 
     @GetMapping("/boasvindas") //? Anotação para mapear as requisições GET para o caminho "/boasvindas"
@@ -18,13 +18,13 @@ public class NinjaController {
     }
 
     // Mostrar todos os ninjas (READ)
-    @GetMapping("/todos")
+    @GetMapping("/listar")
     public String mostrarTodosOsNinja() {
         return "Mostrar ninja";
     }
 
     // Mostrar ninjas por id (READ)
-    @GetMapping("/todosID")
+    @GetMapping("/listarID")
     public String mostrarTodosOsNinjaPorId() {
         return "Mostrar ninja por ID";
     }
