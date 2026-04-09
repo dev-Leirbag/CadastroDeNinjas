@@ -11,6 +11,7 @@ import java.util.Optional;
 public class MissoesService {
 
     private final MissoesRepository missoesRepository;
+    private final MissoesMapper missoesMapper;
 
     // Lista todas as minhas missoes
     public List<MissoesModel> listarMissoes(){
@@ -25,8 +26,11 @@ public class MissoesService {
     }
 
     // Cria uma nova missao
-    public MissoesModel criarMissao(MissoesModel missao){
-        return missoesRepository.save(missao);
+    public MissoesDTO criarMissao(MissoesDTO missao){
+        MissoesModel missoesModel = missoesMapper.map(missao);
+        var missaoSalva = missoesRepository.save(missoesModel);
+
+        return missoesMapper.map(missaoSalva);
     }
 
     // Deleta uma missao
