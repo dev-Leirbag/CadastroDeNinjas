@@ -11,6 +11,7 @@ import java.util.Optional;
 public class NinjaService {
 
     private final NinjaRepository ninjaRepository;
+    private final NinjaMapper ninjaMapper;
 
     //Listar todos os meus ninjas
     public List<NinjaModel> listarNinjas(){
@@ -25,8 +26,12 @@ public class NinjaService {
     }
 
     // Criar um novo ninja
-    public NinjaModel criarNinja (NinjaModel ninja) {
-        return ninjaRepository.save(ninja);
+    public NinjaDTO criarNinja (NinjaDTO ninjaDTO) {
+
+        NinjaModel ninja = ninjaMapper.map(ninjaDTO);
+        var ninjaSalvo = ninjaRepository.save(ninja);
+
+        return ninjaMapper.map(ninjaSalvo);
     }
 
     // Deletar o ninja - tem que ser um metodo VOID
