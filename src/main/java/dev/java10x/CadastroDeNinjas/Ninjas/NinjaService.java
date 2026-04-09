@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service //? Anotação para indicar que esta classe é um serviço, responsável pela lógica de negócios da aplicação
 @RequiredArgsConstructor
@@ -14,15 +15,19 @@ public class NinjaService {
     private final NinjaMapper ninjaMapper;
 
     //Listar todos os meus ninjas
-    public List<NinjaModel> listarNinjas(){
-        return ninjaRepository.findAll();
+    public List<NinjaDTO> listarNinjas(){
+        List<NinjaModel> ninjas = ninjaRepository.findAll();
+
+        return ninjas.stream()
+                .map(ninjaMapper::map)
+                .collect(Collectors.toList());
     }
 
     //Lista ninja por ID
-    public NinjaModel listarNinjasPorId(Long id) {
+    public NinjaDTO listarNinjasPorId(Long id) {
          Optional<NinjaModel> ninja = ninjaRepository.findById(id);
 
-        return ninja.orElse(null);
+        return ninja.map(ninjaMapper::map).orElse(null);
     }
 
     // Criar um novo ninja
@@ -40,10 +45,14 @@ public class NinjaService {
     }
 
     // Atualizar Ninja
-    public NinjaModel atualizarNinja(Long id, NinjaModel ninjaAtualizado) {
-        if(ninjaRepository.existsById(id)) {
+    public NinjaDTO atualizarNinja(Long id, NinjaDTO ninjaDTO) {
+        Optional<NinjaModel> ninja = ninjaRepository.findById(id);
+
+        if (ninja.isPresent()) {
+            NinjaModel ninjaAtualizado = ninjaMapper.map(ninjaDTO);
             ninjaAtualizado.setId(id);
-            return ninjaRepository.save(ninjaAtualizado);
+            var ninjaSalvo = ninjaRepository.save(ninjaAtualizado);
+            return ninjaMapper.map(ninjaSalvo);
         }
         return null;
     }
