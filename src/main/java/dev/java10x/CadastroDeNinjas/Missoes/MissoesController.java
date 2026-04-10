@@ -20,20 +20,20 @@ public class MissoesController {
 
     // Mostrar todas as missoes (READ)
     @GetMapping("/listar")
-    public List<MissoesModel> mostrarTodasAsMissoes(){
+    public List<MissoesDTO> mostrarTodasAsMissoes(){
         return missoesService.listarMissoes();
     }
 
     // Mostrar missoes por id (READ)
     @GetMapping("/listar/{id}")
-    public MissoesModel listarMissaoPorId(@PathVariable Long id){
+    public MissoesDTO listarMissaoPorId(@PathVariable Long id){
         return missoesService.listarMissoesPorId(id);
     }
 
     // Alterar dados das missoes (UPDATE)
-    @PutMapping("/alterarID")
-    public String alterarID(){
-        return "Alterar missão por ID";
+    @PutMapping("/alterar/{id}")
+    public MissoesDTO alterarMissaoPorId(@PathVariable Long id, @RequestBody MissoesDTO missao){
+        return missoesService.alterarMissaoPorId(id, missao);
     }
 
     // Deletar Missao (DELETE)

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -14,15 +15,19 @@ public class MissoesService {
     private final MissoesMapper missoesMapper;
 
     // Lista todas as minhas missoes
-    public List<MissoesModel> listarMissoes(){
-        return missoesRepository.findAll();
+    public List<MissoesDTO> listarMissoes(){
+        List<MissoesModel> missoes = missoesRepository.findAll();
+
+        return missoes.stream()
+                .map(missoesMapper::map)
+                .collect(Collectors.toList());
     }
 
     // Lista as missoes por ID
-    public MissoesModel listarMissoesPorId(long id) {
+    public MissoesDTO listarMissoesPorId(long id) {
         Optional<MissoesModel> missoesModel = missoesRepository.findById(id);
 
-        return missoesModel.orElse(null);
+        return missoesModel.map(missoesMapper::map).orElse(null);
     }
 
     // Cria uma nova missao
@@ -31,6 +36,19 @@ public class MissoesService {
         var missaoSalva = missoesRepository.save(missoesModel);
 
         return missoesMapper.map(missaoSalva);
+    }
+
+    // Atualiza missao
+    public MissoesDTO alterarMissaoPorId(Long id, MissoesDTO missao){
+        Optional<MissoesModel> missoesModel = missoesRepository.findById(id);
+
+        if (missoesModel.isPresent()){
+            MissoesModel missaoAtualizada = missoesMapper.map(missao);
+            missaoAtualizada.setId(id);
+            var missaoSalva = missoesRepository.save(missaoAtualizada);
+            return missoesMapper.map(missaoSalva);
+        }
+            return null;
     }
 
     // Deleta uma missao
