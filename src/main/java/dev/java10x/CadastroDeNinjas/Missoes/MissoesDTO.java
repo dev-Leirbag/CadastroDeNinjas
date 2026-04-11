@@ -1,8 +1,11 @@
 package dev.java10x.CadastroDeNinjas.Missoes;
 
+import dev.java10x.CadastroDeNinjas.Ninjas.NinjaDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -12,4 +15,5 @@ public class MissoesDTO {
     private Long id;
     private String nome;
     private String dificuldade;
+    private List<NinjaDTO> ninjas;
 }
